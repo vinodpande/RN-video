@@ -66,8 +66,21 @@ export const VideoPlayer: React.FC = () => {
             <View style={styles.controlOverlay}>
               <TouchableOpacity
                 onPress={handleFullscreen}
-                hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}
-                style={styles.fullscreenButton}>
+                style={
+                  state.fullscreen
+                    ? styles.fullscreenLButton
+                    : styles.fullscreenPButton
+                }>
+                {state.fullscreen ? <FullscreenClose /> : <FullscreenOpen />}
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                onPress={handleBackNavigation}
+                style={
+                  state.fullscreen
+                    ? styles.fullscreenPBackNavButton
+                    : styles.fullscreenPBackNavButton
+                }>
                 {state.fullscreen ? <FullscreenClose /> : <FullscreenOpen />}
               </TouchableOpacity>
               <PlayerControls
@@ -90,7 +103,7 @@ export const VideoPlayer: React.FC = () => {
           )}
         </View>
       </TouchableWithoutFeedback>
-      <ScrollView>
+      {/* <ScrollView>
         <Text style={styles.text}>
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus enim
           suscipit ipsa impedit laboriosam saepe, sapiente excepturi molestiae
@@ -100,7 +113,7 @@ export const VideoPlayer: React.FC = () => {
           debitis veritatis autem deserunt at voluptas nam ut mollitia qui fugit
           minus minima quod.
         </Text>
-      </ScrollView>
+      </ScrollView> */}
     </View>
   );
 
@@ -115,6 +128,10 @@ export const VideoPlayer: React.FC = () => {
     state.fullscreen
       ? Orientation.unlockAllOrientations()
       : Orientation.lockToLandscapeLeft();
+  }
+
+  function handleBackNavigation() {
+    console.log('Back navigation');
   }
 
   function handlePlayPause() {
@@ -176,7 +193,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#ebebeb',
   },
   video: {
-    height: Dimensions.get('window').width * (9 / 16),
+    height: Dimensions.get('window').width * (6 / 10),
     width: Dimensions.get('window').width,
     backgroundColor: 'black',
   },
@@ -185,18 +202,39 @@ const styles = StyleSheet.create({
     width: Dimensions.get('window').height,
     backgroundColor: 'black',
   },
-  text: {
-    marginTop: 30,
-    marginHorizontal: 20,
-    fontSize: 15,
-    textAlign: 'justify',
-  },
-  fullscreenButton: {
-    flex: 1,
+  // text: {
+  //   marginTop: 30,
+  //   marginHorizontal: 20,
+  //   fontSize: 15,
+  //   textAlign: 'justify',
+  // },
+  fullscreenPButton: {
+    position: 'absolute',
     flexDirection: 'row',
     alignSelf: 'flex-end',
     alignItems: 'center',
     paddingRight: 10,
+    bottom: 50,
+    right: 20,
+  },
+  fullscreenLButton: {
+    position: 'absolute',
+    flexDirection: 'row',
+    alignSelf: 'flex-end',
+    alignItems: 'center',
+    paddingRight: 10,
+    bottom: 80,
+    right: 20,
+  },
+
+  fullscreenPBackNavButton: {
+    position: 'absolute',
+    flexDirection: 'row',
+    alignSelf: 'flex-end',
+    alignItems: 'center',
+    paddingRight: 10,
+    top: 10,
+    left: 10,
   },
   controlOverlay: {
     position: 'absolute',

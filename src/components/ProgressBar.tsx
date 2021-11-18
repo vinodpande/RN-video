@@ -1,6 +1,6 @@
 import React from 'react';
 import Slider from '@react-native-community/slider';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet, Dimensions} from 'react-native';
 
 interface Props {
   currentTime: number;
@@ -22,6 +22,11 @@ export const ProgressBar: React.FC<Props> = ({
 
   return (
     <View style={styles.wrapper}>
+      <View style={styles.timeWrapper}>
+        <Text style={styles.timeLeft}>{position}</Text>
+        <Text style={styles.timePipe}>/</Text>
+        <Text style={styles.timeRight}>{fullDuration}</Text>
+      </View>
       <Slider
         value={currentTime}
         minimumValue={0}
@@ -34,10 +39,6 @@ export const ProgressBar: React.FC<Props> = ({
         maximumTrackTintColor={'#FFFFFF'}
         thumbTintColor={'#F44336'}
       />
-      <View style={styles.timeWrapper}>
-        <Text style={styles.timeLeft}>{position}</Text>
-        <Text style={styles.timeRight}>{fullDuration}</Text>
-      </View>
     </View>
   );
 
@@ -61,18 +62,21 @@ const styles = StyleSheet.create({
   },
   timeWrapper: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
     paddingHorizontal: 5,
   },
   timeLeft: {
-    flex: 1,
     fontSize: 16,
     color: '#FFFFFF',
     paddingLeft: 10,
   },
+  timePipe: {
+    paddingLeft: 4,
+    color: '#FFFFFF',
+    fontSize: 16,
+    lineHeight: 20,
+    paddingRight: 4,
+  },
   timeRight: {
-    flex: 1,
     fontSize: 16,
     color: '#FFFFFF',
     textAlign: 'right',
